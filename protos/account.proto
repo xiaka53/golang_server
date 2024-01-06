@@ -1,0 +1,85 @@
+syntax = "proto3";
+
+option go_package = "./pkg";
+
+package interact;
+
+service Account {
+    //账号查询是否匹配
+    rpc AccountSelect (AccountSelectRequest) returns (AccountSelectResponse){};
+    //创建新用户
+    rpc AddAccount (AddAccountRequest) returns (ExecAccountResponse){};
+    //关闭用户
+    rpc CloseAccount (CloseAccountRequest) returns (ExecAccountResponse){};
+    //开启新用户
+    rpc OpenAccount (OpenAccountRequest) returns (ExecAccountResponse){};
+    //个人资料查询
+    rpc AccountInfo (AccountInfoRequest) returns (AccountInfoResponse){};
+}
+
+// 账号查询请求
+message AccountSelectRequest {
+    //URL
+    string url = 1;
+    //账号
+    string account = 2;
+}
+
+// 账号查询返回
+message AccountSelectResponse {
+    //用户权限token
+    string token = 1;
+}
+
+// 创建新用户请求
+message AddAccountRequest {
+    //用户权限token
+    string token = 1;
+    //账号
+    string account = 2;
+    //邮箱
+    string email = 3;
+    //手机号
+    string phone = 4;
+    //昵称
+    string name = 5;
+    //三级域名
+    string url = 6;
+}
+
+//关闭用户请求
+message CloseAccountRequest {
+    //token
+    string token = 1;
+    //账号
+    string account = 2;
+}
+
+//开启用户请求
+message OpenAccountRequest {
+    //token
+    string token = 1;
+    //账号
+    string account = 2;
+}
+
+//个人信息请求
+message AccountInfoRequest {
+    //token
+    string token = 1;
+}
+
+//个人信息返回
+message AccountInfoResponse {
+    //余额
+    float amount = 1;
+    //TODO
+}
+
+// 用户返回值
+message ExecAccountResponse {
+    //执行状态
+    bool status = 1;
+    //执行错误时错误信息
+    string msg = 2;
+}

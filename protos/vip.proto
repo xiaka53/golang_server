@@ -1,0 +1,123 @@
+syntax = "proto3";
+
+option go_package = "./pkg";
+
+package interact;
+
+service Vip {
+    //列表
+    rpc List (VipListRepuest) returns (VipListResponse) {};
+    //执行开通
+    rpc Open (OpenVipRepuest) returns (VipResponse) {};
+    //添加会员种类
+    rpc AddVip (AddVipRequest) returns (VipResponse) {};
+    //开启会员
+    rpc OnVip (OpenOrCloseVipRequest) returns (VipResponse) {};
+    //修改会员信息
+    rpc Edit (EditVipRequest) returns (VipResponse) {};
+    //关闭会员
+    rpc OffVip (OpenOrCloseVipRequest) returns (VipResponse) {};
+}
+
+//获取列表
+message VipListRepuest {
+    //token
+    string token = 1;
+    //筛选名称
+    optional string name = 2;
+    //页数
+    int32 page = 3;
+    //每页条数
+    int32 from = 4;
+}
+
+//返回列表信息
+message VipListResponse {
+    //总条数
+    int32 total_count = 1;
+    //vip信息列表
+    repeated VipInfo list = 2;
+}
+
+//vip信息
+message VipInfo {
+    //Vip状态
+    enum VipStatus {
+        //开启状态
+        On = 0;
+        //关闭状态
+        Off = 1;
+    }
+    //LOGO
+    string logo = 1;
+    //名称
+    string name = 2;
+    //价格
+    float price = 3;
+    //简介
+    string msg = 4;
+    //标识
+    int32 mark = 5;
+    //开通数量
+    int64 count = 6;
+    //状态
+    VipStatus status = 7;
+}
+
+//执行开通会员
+message OpenVipRepuest {
+    //token
+    string token = 1;
+    //账号
+    string account = 2;
+    //vip标识
+    int32 mark = 3;
+    //备注
+    optional string memo = 4;
+}
+
+//添加会员类型
+message AddVipRequest {
+    //LOGO
+    string logo = 1;
+    //名称
+    string name = 2;
+    //价格
+    float price = 3;
+    //简介
+    string msg = 4;
+    //token
+    string token = 5;
+}
+
+//修改会员类型
+message EditVipRequest {
+    //LOGO
+    optional string logo = 1;
+    //名称
+    optional string name = 2;
+    //价格
+    optional float price = 3;
+    //简介
+    optional string msg = 4;
+    //vip标识
+    int32 mark = 5;
+    //token
+    string token = 6;
+}
+
+//开启或关闭会员类型
+message OpenOrCloseVipRequest {
+    //token
+    string token = 1;
+    //vip标识
+    int32 mark = 2;
+}
+
+//会员返回
+message VipResponse {
+    //执行状态
+    bool status = 1;
+    //执行错误时错误信息
+    string msg = 2;
+}

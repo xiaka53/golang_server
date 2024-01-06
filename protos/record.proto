@@ -1,0 +1,116 @@
+syntax = "proto3";
+
+option go_package = "./pkg";
+
+package interact;
+
+service Record {
+    //查询流水
+    rpc List (RecordListRequest) returns (RecordListResponse){};
+    //取消充值
+    rpc Cancel (CancelRecordRequest) returns (RecordResponse){};
+    //充值完成
+    rpc Finish (FinishRecordRequest) returns (RecordResponse){};
+    //申请售后
+    rpc ApplyAfterSales (ApplyAfterSalesRequest) returns (RecordResponse){};
+    //填写备注
+    rpc Memo (MemoRepuest) returns (RecordResponse){};
+}
+
+//查询流水
+message RecordListRequest {
+    //token
+    string token = 1;
+    //页数
+    int32 page = 2;
+    //每页条数
+    int32 from = 3;
+}
+
+//返回流水信息
+message RecordListResponse {
+    //数据总条数
+    int32 total_count = 1;
+    //订单数据
+    repeated RecordInfo list = 2;
+}
+
+//取消订单
+message CancelRecordRequest {
+    //token
+    string token = 1;
+    //标识
+    int32 mark = 2;
+}
+
+//充值完成
+message FinishRecordRequest {
+    //token
+    string token = 1;
+    //标识
+    int32 mark = 2;
+}
+
+//申请售后
+message ApplyAfterSalesRequest {
+    //token
+    string token = 1;
+    //标识
+    int32 mark = 2;
+    //售后内容
+    string msg = 3;
+}
+
+//填写备注
+message MemoRepuest {
+    //token
+    string token = 1;
+    //标识
+    int32 mark = 2;
+    //备注
+    string memo = 3;
+}
+
+//流水信息
+message RecordInfo {
+    //状态
+    enum State {
+        //完成
+        Finish = 0;
+        //待审核
+        Review = 1;
+        //取消
+        Cancel = 2;
+        //执行失败
+        Fail = 3;
+        //申诉
+        Appeal = 4;
+    }
+
+    //代理商
+    string agent = 1;
+    //充值帐户
+    string account = 2;
+    //充值会员种类
+    string vip = 3;
+    //价格
+    float price = 4;
+    //状态
+    State state = 5;
+    //执行次数
+    int32 exec_count = 6;
+    //申诉内容
+    string msg = 7;
+    //备注信息
+    string memo = 8;
+    //标识
+    int32 mark = 9;
+}
+
+//执行返回
+message RecordResponse {
+    //执行状态
+    bool status = 1;
+    //执行错误时错误信息
+    string msg = 2;
+}
