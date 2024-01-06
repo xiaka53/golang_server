@@ -9,14 +9,15 @@ const (
 )
 
 type Account struct {
-	Id          int    `json:"id" gorm:"column:id;primary_key" description:""`
-	Recommender int    `json:"recommender" gorm:"column:recommender" description:"推荐人"`
-	Account     string `json:"account" gorm:"column:account" description:"账号"`
-	Email       string `json:"email" gorm:"column:email" description:"邮箱"`
-	Phone       string `json:"phone" gorm:"column:phone" description:"手机号"`
-	Name        string `json:"name" gorm:"column:name" description:"名称"`
-	Url         string `json:"url" gorm:"column:url" description:"URL"`
-	Token       string `json:"token" gorm:"column:token" description:"token"`
+	Id          int     `json:"id" gorm:"column:id;primary_key" description:""`
+	Recommender int     `json:"recommender" gorm:"column:recommender" description:"推荐人"`
+	Account     string  `json:"account" gorm:"column:account" description:"账号"`
+	Email       string  `json:"email" gorm:"column:email" description:"邮箱"`
+	Phone       string  `json:"phone" gorm:"column:phone" description:"手机号"`
+	Name        string  `json:"name" gorm:"column:name" description:"名称"`
+	Url         string  `json:"url" gorm:"column:url" description:"URL"`
+	Token       string  `json:"token" gorm:"column:token" description:"token"`
+	Amount      float64 `json:"amount" gorm:"column:token" description:"token"`
 }
 
 func (a *Account) TableName() string {
@@ -82,5 +83,6 @@ func (a *Account) Create() string {
 	if mysqlConn.Table(a.TableName()).Create(a).Error == nil {
 		return ""
 	}
+	// 资金扣除 TODO
 	return "注册失败"
 }

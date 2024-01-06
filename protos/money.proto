@@ -10,6 +10,7 @@ service Money {
     rpc Rechange (RechangeRepuest) returns (ExecMoneyResponse){};
     //申请退款
     rpc RefundMoney (RefundMoneyRequest) returns (ExecMoneyResponse){};
+    //充值列表
 }
 
 //充值请求

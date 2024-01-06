@@ -54,6 +54,7 @@ func (a *account) AddAccount(ctx context.Context, req *pkg.AddAccountRequest) (*
 	var (
 		info          pkg.ExecAccountResponse
 		data, newUser dao.Account
+		price         float64
 		err           error
 	)
 	data.Token = req.GetToken()
@@ -70,7 +71,12 @@ func (a *account) AddAccount(ctx context.Context, req *pkg.AddAccountRequest) (*
 		err = errors.New("recommender err")
 		goto OUT
 	}
-	// 资金判断 TODO
+	price = dao.GetAgentPrice()
+	if data.Amount < price {
+		info.Msg = "您的预留资金不足，请充值"
+		err = errors.New("amount low")
+		goto OUT
+	}
 
 	newUser = dao.Account{
 		Recommender: data.Id,

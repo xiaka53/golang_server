@@ -11,17 +11,11 @@ import (
 var (
 	mysqlConn *gorm.DB
 	domain    string
+	dsn       string
 )
 
 func init() {
-	dsn := os.Getenv("GOLANG_SERVER_DSN_STR")
-	if dsn == "" {
-		log.Fatalf("环境变量设置有误，无法启动服务DNS")
-	}
-	domain = os.Getenv("GOLANG_SERVER_DOMAIN_STR")
-	if domain == "" {
-		log.Fatalf("环境变量设置有误，无法启动服务DOMAIN")
-	}
+	getEnv()
 	dbPoolConfig := mysql.New(mysql.Config{
 		DSN:                       dsn,
 		DefaultStringSize:         256,
@@ -40,11 +34,24 @@ func init() {
 	// 自动创建表格，如果表格已经存在，检查字段是否有变化
 	if err := mysqlConn.AutoMigrate(
 		&Account{},
+		&Config{},
 	); err != nil {
 		log.Fatalf("表格初始化失败：%v", err)
 	}
 
 	mysqlConn = db
+}
+
+func getEnv() {
+	dsn = os.Getenv("GOLANG_SERVER_DSN_STR")
+	if dsn == "" {
+		log.Fatalf("环境变量设置有误，无法启动服务DNS")
+	}
+
+	domain = os.Getenv("GOLANG_SERVER_DOMAIN_STR")
+	if domain == "" {
+		log.Fatalf("环境变量设置有误，无法启动服务DOMAIN")
+	}
 }
 
 // 获取域名
