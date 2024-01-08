@@ -22,12 +22,12 @@ func (c *Config) init() {
 }
 
 // 获取代理商价格
-func GetAgentPrice() float64 {
+func GetAgentPrice() float32 {
 	var c *Config
 	mysqlConn.Table(c.TableName()).Where("`name`='?'", AGENT_PRICE).First(c)
 	if c.V == "" {
 		return 0
 	}
 	price, _ := strconv.ParseFloat(c.V, 64)
-	return price
+	return float32(price)
 }

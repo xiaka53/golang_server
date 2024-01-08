@@ -7,14 +7,23 @@ package interact;
 //资金管理
 service Money {
     //执行充值
-    rpc Rechange (RechangeRepuest) returns (ExecMoneyResponse){};
+    rpc Rechange (RechangeRepuest) returns (ExecMoneyResponse) {};
     //申请退款
-    rpc RefundMoney (RefundMoneyRequest) returns (ExecMoneyResponse){};
-    //充值列表
+    rpc RefundMoney (RefundMoneyRequest) returns (ExecMoneyResponse) {};
 }
 
 //充值请求
 message RechangeRepuest {
+    //token
+    string token = 1;
+    //账号
+    string account = 2;
+    //金额
+    float amount = 3;
+}
+
+//申请退款
+message RefundMoneyRequest {
     //token
     string token = 1;
     //账号
@@ -29,12 +38,4 @@ message ExecMoneyResponse {
     bool status = 1;
     //执行错误时错误信息
     string msg = 2;
-}
-
-//申请退款
-message RefundMoneyRequest {
-    //token
-    string token = 1;
-    //退款金额
-    float amount = 2;
 }

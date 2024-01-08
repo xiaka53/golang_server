@@ -6,15 +6,17 @@ package interact;
 
 service Account {
     //账号查询是否匹配
-    rpc AccountSelect (AccountSelectRequest) returns (AccountSelectResponse){};
+    rpc AccountSelect (AccountSelectRequest) returns (AccountSelectResponse) {};
     //创建新用户
-    rpc AddAccount (AddAccountRequest) returns (ExecAccountResponse){};
+    rpc AddAccount (AddAccountRequest) returns (ExecAccountResponse) {};
     //关闭用户
-    rpc CloseAccount (CloseAccountRequest) returns (ExecAccountResponse){};
+    rpc CloseAccount (CloseAccountRequest) returns (ExecAccountResponse) {};
     //开启新用户
-    rpc OpenAccount (OpenAccountRequest) returns (ExecAccountResponse){};
+    rpc OpenAccount (OpenAccountRequest) returns (ExecAccountResponse) {};
     //个人资料查询
-    rpc AccountInfo (AccountInfoRequest) returns (AccountInfoResponse){};
+    rpc AccountInfo (AccountInfoRequest) returns (AccountInfoResponse) {};
+    //设置备注
+    rpc SetMemoAccount (MemoRequest) returns (ExecAccountResponse);
 }
 
 // 账号查询请求
@@ -45,6 +47,8 @@ message AddAccountRequest {
     string name = 5;
     //三级域名
     string url = 6;
+    //备注
+    string memo = 7;
 }
 
 //关闭用户请求
@@ -74,6 +78,16 @@ message AccountInfoResponse {
     //余额
     float amount = 1;
     //TODO
+}
+
+//备注设置
+message MemoRequest {
+    //token
+    string token = 1;
+    //账号
+    string account = 2;
+    //备注
+    string memo = 3;
 }
 
 // 用户返回值

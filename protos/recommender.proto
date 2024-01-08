@@ -6,22 +6,16 @@ package interact;
 
 service Recommender {
     //推荐人列表
-    rpc List (RecommenderTokenRequest) returns (RecommenderListResponse){};
-}
-
-//推荐人Token请求
-message RecommenderTokenRequest {
-    //token
-    string token = 1;
+    rpc List (RecommenderListRequest) returns (RecommenderListResponse){};
 }
 
 //推荐人列表请求
 message RecommenderListRequest {
     //token
     string token = 1;
-    //页数
-    int32 page = 2;
     //每页条数
+    int32 amount = 2;
+    //页数
     int32 from = 3;
 }
 
