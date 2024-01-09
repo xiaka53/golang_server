@@ -6,15 +6,31 @@ package interact;
 
 service Record {
     //查询流水
-    rpc List (RecordListRequest) returns (RecordListResponse){};
+    rpc List (RecordListRequest) returns (RecordListResponse) {};
     //取消充值
-    rpc Cancel (CancelRecordRequest) returns (RecordResponse){};
+    rpc Cancel (CancelRecordRequest) returns (RecordResponse) {};
     //充值完成
-    rpc Finish (FinishRecordRequest) returns (RecordResponse){};
+    rpc Finish (FinishRecordRequest) returns (RecordResponse) {};
     //申请售后
-    rpc ApplyAfterSales (ApplyAfterSalesRequest) returns (RecordResponse){};
+    rpc ApplyAfterSales (ApplyAfterSalesRequest) returns (RecordResponse) {};
     //填写备注
-    rpc Memo (MemoRepuest) returns (RecordResponse){};
+    rpc Memo (MemoRepuest) returns (RecordResponse) {};
+}
+
+//状态
+enum State {
+    // 未指定
+    Unspecified = 0;
+    //完成
+    Finish = 1;
+    //待审核
+    Review = 2;
+    //取消
+    Cancel = 3;
+    //执行失败
+    Fail = 4;
+    //申诉
+    Appeal = 5;
 }
 
 //查询流水
@@ -25,6 +41,10 @@ message RecordListRequest {
     int32 page = 2;
     //每页条数
     int32 from = 3;
+    //状态
+    optional State state = 4;
+    //代理商
+    optional string agent = 5;
 }
 
 //返回流水信息
@@ -73,20 +93,6 @@ message MemoRepuest {
 
 //流水信息
 message RecordInfo {
-    //状态
-    enum State {
-        //完成
-        Finish = 0;
-        //待审核
-        Review = 1;
-        //取消
-        Cancel = 2;
-        //执行失败
-        Fail = 3;
-        //申诉
-        Appeal = 4;
-    }
-
     //代理商
     string agent = 1;
     //充值帐户
