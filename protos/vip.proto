@@ -43,10 +43,12 @@ message VipListResponse {
 message VipInfo {
     //Vip状态
     enum VipStatus {
+        // 未指定
+        Unspecified = 0;
         //开启状态
-        On = 0;
+        On = 1;
         //关闭状态
-        Off = 1;
+        Off = 2;
     }
     //LOGO
     string logo = 1;
@@ -59,9 +61,11 @@ message VipInfo {
     //标识
     int32 mark = 5;
     //开通数量
-    int64 count = 6;
+    int32 count = 6;
     //状态
     VipStatus status = 7;
+    //原价
+    float original_price = 8;
 }
 
 //执行开通会员
@@ -88,6 +92,8 @@ message AddVipRequest {
     string msg = 4;
     //token
     string token = 5;
+    //原价
+    float original_price = 6;
 }
 
 //修改会员类型
@@ -104,6 +110,8 @@ message EditVipRequest {
     int32 mark = 5;
     //token
     string token = 6;
+    //原价
+    float original_price = 7;
 }
 
 //开启或关闭会员类型

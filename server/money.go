@@ -69,6 +69,7 @@ func (m *money) Rechange(ctx context.Context, req *pkg.RechangeRepuest) (*pkg.Ex
 		err = errors.New("rechange err")
 		goto OUT
 	}
+	info.Status = true
 OUT:
 	return &info, err
 }
@@ -128,6 +129,7 @@ func (m *money) RefundMoney(ctx context.Context, req *pkg.RefundMoneyRequest) (*
 		err = errors.New("refund err")
 		goto OUT
 	}
+	info.Status = true
 OUT:
 	return &info, err
 }

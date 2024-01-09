@@ -7,7 +7,7 @@ import (
 
 const (
 	// 开户
-	Detail_Type_Recommender = iota
+	Detail_Type_Recommender = iota + 1
 	// 购买
 	Detail_Type_BuyVip
 	// 提现
@@ -18,6 +18,8 @@ const (
 	Detail_Type_Rechange
 	// 充值扣除
 	Detail_Type_RechangeDeduct
+	// 取消订单
+	Detail_Type_CancelOrder
 )
 
 type Detail struct {

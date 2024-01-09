@@ -69,13 +69,13 @@ func (a *account) AddAccount(ctx context.Context, req *pkg.AddAccountRequest) (*
 	}
 	if data.Recommender != dao.ADMIN_MARK && data.Id != dao.ADMIN_MARK {
 		info.Msg = "您无权限推荐代理商"
-		err = errors.New("recommender err")
+		// err = errors.New("recommender err")
 		goto OUT
 	}
 	price = dao.GetAgentPrice()
 	if data.Amount < price {
 		info.Msg = "您的预留资金不足，请充值"
-		err = errors.New("amount low")
+		// err = errors.New("amount low")
 		goto OUT
 	}
 	newUser = dao.Account{
@@ -103,6 +103,7 @@ func (a *account) AddAccount(ctx context.Context, req *pkg.AddAccountRequest) (*
 		err = errors.New("create err")
 		goto OUT
 	}
+	info.Status = true
 OUT:
 	return &info, err
 }
@@ -143,6 +144,7 @@ func (a *account) CloseAccount(ctx context.Context, req *pkg.CloseAccountRequest
 		info.Msg = "关闭失败"
 		goto OUT
 	}
+	info.Status = true
 OUT:
 	return &info, err
 }
@@ -183,6 +185,7 @@ func (a *account) OpenAccount(ctx context.Context, req *pkg.OpenAccountRequest) 
 		info.Msg = "开启失败"
 		goto OUT
 	}
+	info.Status = true
 OUT:
 	return &info, err
 }
@@ -246,6 +249,7 @@ func (a *account) SetMemoAccount(ctx context.Context, req *pkg.MemoRequest) (*pk
 		err = errors.New("update err")
 		goto OUT
 	}
+	info.Status = true
 OUT:
 	return &info, err
 }
